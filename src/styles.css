@@ -179,7 +179,17 @@ p {
 
 /* section */
 .section {
-  padding-bottom: 5rem;
+  padding-bottom: 3rem;
+  font-size: 2rem;
+}
+#about p {
+  text-align: center;
+  margin-top: 1rem;
+}
+section .about-image-travel {
+  margin: 0 auto;
+  width: 20%;
+  border-radius: 5px;
 }
 
 .section-center {
@@ -329,10 +339,10 @@ header {
 }
 
 .banner {
-  min-height: 100vh;
   display: grid;
-  place-items: center;
+  min-height: 100vh;
   text-align: center;
+  place-items: center;
 }
 
 .container h1 {
@@ -341,10 +351,19 @@ header {
 }
 
 .container p {
-  color: var(--clr-white);
-  max-width: 25rem;
   margin: 0 auto;
+  max-width: 25rem;
   margin-bottom: 1.25rem;
+  color: var(--clr-white);
+}
+
+.container-carousel {
+  max-width: 60%;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+}
+.item img {
+  width: 100%;
 }
 
 @media screen and (min-width: 768px) {
@@ -354,9 +373,16 @@ header {
 }
 
 /* sections and title */
+
+.title h2 {
+  margin-bottom: 4rem;
+}
 .title h2 {
   text-align: center;
   text-transform: uppercase;
+}
+.title .about-image-travel {
+  margin-top: 4rem;
 }
 
 .title span {
@@ -371,6 +397,7 @@ header {
 
 #services {
   background: var(--clr-white);
+  text-align: center;
 }
 
 footer {
@@ -379,11 +406,12 @@ footer {
 }
 
 footer p {
-  color: var(--clr-white);
+  font-size: 1.3rem;
+  margin-bottom: 0;
   text-align: center;
+  color: var(--clr-white);
   text-transform: capitalize;
   letter-spacing: var(--spacing);
-  margin-bottom: 0;
 }
 
 .top-link {
