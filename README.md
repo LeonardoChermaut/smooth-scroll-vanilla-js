@@ -8,4 +8,4 @@ Right button on `index.html` and select `Open with Live Server` or `Alt + L Alt 
 ## Stacks 
 
 
-**Front-end:** HTML, CSS, Vanilla JS
+**Front-end:** HTML, CSS, Vanilla JS, Boostrap;
