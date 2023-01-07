@@ -361,16 +361,16 @@ header {
   max-width: 60%;
   margin: 0 auto;
   margin-bottom: 1rem;
+  
+}
+.carousel-inner{
+  background-color: var(--clr-white);
 }
 .item img {
   width: 100%;
+  border-radius: 2rem;
 }
 
-@media screen and (min-width: 768px) {
-  .container p {
-    max-width: 40rem;
-  }
-}
 
 /* sections and title */
 
@@ -436,15 +436,27 @@ footer p {
   z-index: 100;
 }
 
+@media screen and (min-width: 768px) {
+  .container p {
+    max-width: 40rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  #about, #services, #tours {
+    font-size: 1.5rem;
+  }
+}
+
 @keyframes bounce {
   0% {
     transform: scale(1);
   }
-
+  
   50% {
     transform: scale(1.5);
   }
-
+  
   100% {
     transform: scale(1);
   }
