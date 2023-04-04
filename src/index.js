@@ -1,62 +1,84 @@
-const date = document.getElementById("date");
-date.innerHTML = new Date().getFullYear();
 
-const navTooggle = document.querySelector(".nav-toggle");
-const linksContainer = document.querySelector(".links-container");
-const links = document.querySelector(".links");
+/*** 
+ *  Selecionando os elementos do DOM
+ ***/
+const navbarElement = document.getElementById("nav");
+const linksElement = document.querySelector(".links");
+const topLinkElement = document.querySelector(".top-link");
+const navToggleElement = document.querySelector(".nav-toggle");
+const currentYearElement = document.getElementById("date");
+const scrollLinksElements = document.querySelectorAll(".scroll-link");
+const linksContainerElement = document.querySelector(".links-container");
 
-navTooggle.addEventListener("click", () => {
-  const containerHeigh = linksContainer.getBoundingClientRect().height;
-  const linksHeight = links.getBoundingClientRect().height;
+/** 
+ * Calculando a altura da navbar 
+ **/
+const NAVBAR_HEIGHT = navbarElement.getBoundingClientRect().height;
 
-  if (containerHeigh === 0) {
-    linksContainer.style.height = `${linksHeight}px`;
-  } else {
-    linksContainer.style.height = 0;
-  }
-});
 
-const navbar = document.getElementById("nav");
-const topLink = document.querySelector(".top-link");
+/**
+Configurando o ano atual no rodapé
+**/
+const date = new Date().getFullYear();
+currentYearElement.innerHTML = date;
 
-window.addEventListener("scroll", () => {
+
+/***
+Função que abre/fecha o container de links
+***/
+const toggleLinksContainer = () => {
+  const containerHeight = linksContainerElement.getBoundingClientRect().height;
+  const linksHeight = linksElement.getBoundingClientRect().height;
+  linksContainerElement.style.height = containerHeight === 0 ? `${linksHeight}px` : 0;
+};
+
+
+/***
+Função que adiciona/ remove classe para navbar fixa e para exibir botão de scroll to top
+***/
+const toggleFixedNavbarAndTopLink = () => {
   const scrollHeight = window.pageYOffset;
-  const navHeight = navbar.getBoundingClientRect().height;
-  if (scrollHeight > navHeight) {
-    navbar.classList.add("fixed-nav");
-  } else {
-    navbar.classList.remove("fixed-nav");
-  }
-  if (scrollHeight > 500) {
-    topLink.classList.add("show-link");
-  } else {
-    topLink.classList.remove("show-link");
-  }
-});
+  navbarElement.classList.toggle("fixed-nav", scrollHeight > NAVBAR_HEIGHT);
+  topLinkElement.classList.toggle("show-link", scrollHeight > 500);
+};
 
-const scrollLinks = document.querySelectorAll(".scroll-link");
 
-scrollLinks.forEach((link) => {
-  link.addEventListener("click", (e) => {
-    e.preventDefault();
-    const id = e.currentTarget.getAttribute("href").slice(1);
-    const element = document.getElementById(id);
-    const navHeight = navbar.getBoundingClientRect().height;
-    const containerHeight = linksContainer.getBoundingClientRect().height;
-    const fixedNav = navbar.classList.contains("fixed-nav");
-    let position = element.offsetTop - navHeight;
+/** 
+ * Adicionando event listeners
+ **/
+navToggleElement.addEventListener("click", toggleLinksContainer);
+window.addEventListener("scroll", toggleFixedNavbarAndTopLink);
 
-    if (!fixedNav) {
-      position = position - navHeight;
-    }
-    if (navHeight > 82) {
-      position = position + containerHeight;
-    }
 
-    window.scrollTo({
-      left: 0,
-      top: position,
-    });
-    linksContainer.style.height = 0;
+/***
+Função que manipula o scroll para a posição do elemento do menu selecionado
+***/
+const handleLinkClick = (event) => {
+  event.preventDefault();
+  const targetElement = document.getElementById(event.currentTarget.getAttribute("href").slice(1));
+
+  const containerHeight = linksContainerElement.getBoundingClientRect().height;
+  const fixedNav = navbarElement.classList.contains("fixed-nav");
+  const targetPosition = targetElement.offsetTop - NAVBAR_HEIGHT;
+  const extraHeight = fixedNav ? NAVBAR_HEIGHT : 2 * NAVBAR_HEIGHT + containerHeight;
+  windowScrollToHandleLink(targetPosition, extraHeight);
+};
+
+
+/** 
+ * Adicionando listener para cada link do menu
+ **/
+const addLinkClickHandler = (link) => link.addEventListener("click", handleLinkClick);
+scrollLinksElements.forEach(addLinkClickHandler);
+
+
+/***
+Função que scrola para o link selecionado
+***/
+const windowScrollToHandleLink = (position, height) => {
+  window.scrollTo({
+    left: 0,
+    top: position + height,
   });
-});
+  linksContainerElement.style.height = 0;
+}
